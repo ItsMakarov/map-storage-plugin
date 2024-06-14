@@ -1,0 +1,16 @@
+{
+  "name": "map-storage-plugin",
+  "tree": {
+    "$className": "DataModel",
+
+    "ServerScriptService": {
+      "Plugin": {
+        "$path": "src",
+        
+        "Packages": {
+          "$path": "Packages"
+        }
+      }
+    }
+  }
+}
