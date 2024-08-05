@@ -22,7 +22,7 @@ local function ArrowComponent(props)
 	local isExpanded = props.isExpanded
 	local setExpanded = props.setExpanded
 	return e("ImageButton", {
-		Image = "rbxassetid://13617613688",
+		Image = "rbxassetid://18818459758",
 		Rotation = isExpanded and 90 or 0,
 		Size = UDim2.fromScale(1, 1),
 		SizeConstraint = Enum.SizeConstraint.RelativeYY,
@@ -35,7 +35,7 @@ local function ArrowComponent(props)
 end
 
 return function(props: Props)
-	local isExpanded, setExpanded = React.useState(true)
+	local isExpanded, setExpanded = React.useState(false)
 	local maps, setMaps = React.useState(props.maps)
 	local mapsUI = {}
 	for index, map in maps do
