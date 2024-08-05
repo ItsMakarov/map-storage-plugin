@@ -23,18 +23,18 @@ type Props = {
 
 return function(props: Props)
 	local map = props.instance
-	local isHoving, setIsHoving = React.useState(false)
+	local isHovering, setIsHovering = React.useState(false)
 
 	return New("Frame", {
 		Size = UDim2.new(1, 0, 0, 35),
 		BackgroundColor3 = Color3.fromRGB(0, 102, 204),
-		BackgroundTransparency = isHoving and 0 or 1,
+		BackgroundTransparency = isHovering and 0 or 1,
 		[React.Event.MouseEnter] = function()
-			setIsHoving(true)
+			setIsHovering(true)
 		end,
 
 		[React.Event.MouseLeave] = function()
-			setIsHoving(false)
+			setIsHovering(false)
 		end,
 	}, {
 		Padding = New("UIPadding", {
