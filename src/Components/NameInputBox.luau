@@ -42,7 +42,7 @@ return function(props: Props)
 
 		Border = e("UIStroke", {
 			Thickness = 1.5,
-			Color = Color3.fromRGB(0, 170, 255),
+			Color = Color3.new(1, 1, 1),
 			Enabled = borderEnabled,
 			ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 		})

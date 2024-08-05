@@ -107,7 +107,7 @@ return function(props: Props)
 			NameInputBox = e(NameInputBox, {
 				instance = props.instance,
 				config = {
-					Size = UDim2.new(1, -68, 1, 0),
+					Size = UDim2.new(1, -72, 1, 0),
 					Position = UDim2.fromOffset(25, 0),
 				},
 			}),
