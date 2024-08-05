@@ -148,7 +148,7 @@ return function(props: Props)
 		}, {
 			Maps = e(React.Fragment, nil, mapsUI),
 			Padding = e("UIPadding", {
-				PaddingLeft = Config.LIST_PADDING,
+				PaddingLeft = UDim.new(0, 10),
 			}),
 
 			List = e("UIListLayout", {
