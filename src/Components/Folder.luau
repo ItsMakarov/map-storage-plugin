@@ -27,7 +27,7 @@ local function ArrowComponent(props)
 		Size = UDim2.fromScale(1, 1),
 		SizeConstraint = Enum.SizeConstraint.RelativeYY,
 		BackgroundTransparency = 1,
-		
+
 		[React.Event.Activated] = function()
 			setExpanded(not isExpanded)
 		end,
@@ -36,52 +36,60 @@ end
 
 return function(props: Props)
 	local isExpanded, setExpanded = React.useState(false)
+	local isHovering, setIsHovering = React.useState(false)
 	local maps, setMaps = React.useState(props.maps)
 	local mapsUI = {}
 	for index, map in maps do
 		mapsUI[tostring(index)] = e(MapComponent, {
-			instance = map
+			instance = map,
 		})
 	end
-	
+
 	React.useEffect(function()
 		local removedConnection = props.instance.ChildRemoved:Connect(function(child)
 			if not child:GetAttribute("Type") then
 				return
 			end
-			
+
 			setMaps(function(oldMaps)
 				local newMaps = table.clone(oldMaps)
 				local index = table.find(newMaps, child)
 				table.remove(newMaps, index)
-				
+
 				return newMaps
 			end)
 		end)
-		
+
 		local addedConnection = props.instance.ChildAdded:Connect(function(child)
 			if not child:GetChildren("Type") then
 				return
 			end
-			
+
 			setMaps(function(oldMaps)
 				local newMaps = table.clone(oldMaps)
 				table.insert(newMaps, child)
-				
+
 				return newMaps
 			end)
 		end)
-		
+
 		return function()
 			removedConnection:Disconnect()
 			addedConnection:Disconnect()
 		end
 	end)
-	
+
 	return e(React.Fragment, nil, {
 		Main = e("Frame", {
-			BackgroundColor3 = Color3.fromRGB(40, 40, 40),
+			BackgroundTransparency = isHovering and 0 or 1,
+			BackgroundColor3 = Color3.fromRGB(0, 102, 204),
 			Size = UDim2.new(1, 0, 0, 35),
+			[React.Event.MouseEnter] = function()
+				setIsHovering(true)
+			end,
+			[React.Event.MouseLeave] = function()
+				setIsHovering(false)
+			end,
 		}, {
 			Corner = e("UICorner"),
 			Arrow = e(ArrowComponent, {
@@ -105,8 +113,8 @@ return function(props: Props)
 			}),
 
 			Actions = e("Frame", {
-				Position = UDim2.fromScale(1, .5),
-				AnchorPoint = Vector2.new(1, .5),
+				Position = UDim2.fromScale(1, 0.5),
+				AnchorPoint = Vector2.new(1, 0.5),
 				BackgroundTransparency = 1,
 				SizeConstraint = Enum.SizeConstraint.RelativeYY,
 				Size = UDim2.fromScale(1, 1),
@@ -133,13 +141,13 @@ return function(props: Props)
 
 					[React.Event.Activated] = function()
 						local map = Functions.newMap()
-						map.Name = `Map #{ #maps + 1 }`
+						map.Name = `Map #{#maps + 1}`
 						map.Parent = props.instance
 					end,
 				}),
-			}),		
+			}),
 		}),
-		
+
 		Container = e("Frame", {
 			AutomaticSize = Enum.AutomaticSize.Y,
 			Visible = isExpanded and #maps > 0,
