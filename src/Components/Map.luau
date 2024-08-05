@@ -13,27 +13,35 @@ local ImageButton = require(Components.ImageButton)
 local NameInputBox = require(Components.NameInputBox)
 local Config = require(Source.Config)
 
-local PADDING = UDim.new(0, 10)
 local SaveMap = Functions.saveMap
 
 local New = React.createElement
 
 type Props = {
-	instance: Folder
+	instance: Folder,
 }
 
 return function(props: Props)
 	local map = props.instance
-	
+	local isHoving, setIsHoving = React.useState(false)
+
 	return New("Frame", {
 		Size = UDim2.new(1, 0, 0, 35),
-		BackgroundColor3 = Color3.fromRGB(40, 40, 40),
+		BackgroundColor3 = Color3.fromRGB(0, 102, 204),
+		BackgroundTransparency = isHoving and 0 or 1,
+		[React.Event.MouseEnter] = function()
+			setIsHoving(true)
+		end,
+
+		[React.Event.MouseLeave] = function()
+			setIsHoving(false)
+		end,
 	}, {
 		Padding = New("UIPadding", {
-			PaddingTop = PADDING,
-			PaddingBottom = PADDING,
-			PaddingRight = PADDING,
-			PaddingLeft = PADDING,
+			PaddingTop = UDim.new(0, 10),
+			PaddingBottom = UDim.new(0, 10),
+			PaddingRight = UDim.new(0, 15),
+			PaddingLeft = UDim.new(0, 15),
 		}),
 
 		List = New("UIListLayout", {
@@ -81,9 +89,7 @@ return function(props: Props)
 
 					task.wait()
 
-					local filter = Searcher.NewFilter()
-						:Not():IsA("Camera")
-						:Not():IsA("Terrain")
+					local filter = Searcher.NewFilter():Not():IsA("Camera"):Not():IsA("Terrain")
 
 					for _, instance: Instance in Searcher.FindAll(filter, workspace:GetChildren()) do
 						instance:Remove()
@@ -109,6 +115,6 @@ return function(props: Props)
 			[React.Event.Activated] = function()
 				SaveMap(map)
 			end,
-		})
+		}),
 	})
 end
