@@ -69,7 +69,7 @@ local function Button(props)
 		[React.Event.Activated] = props.onActivate,
 		TextColor3 = textColor,
 		BackgroundColor3 = backgroundColor,
-		Size = UDim2.fromScale(1, 1),
+		Size = UDim2.new(1, 0, 0, 50),
 		AutoButtonColor = false,
 		TextScaled = true,
 		BorderSizePixel = 0,
@@ -176,8 +176,9 @@ local function app()
 
 			Create = e("Frame", {
 				BackgroundTransparency = 1,
-				Size = UDim2.new(1, 0, 0, 45),
 				LayoutOrder = 1,
+				Size = UDim2.fromScale(1, 0),
+				AutomaticSize = Enum.AutomaticSize.Y,
 			}, {
 				Padding = e("UIPadding", {
 					PaddingLeft = UDim.new(0, 5),
